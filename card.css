@@ -1,70 +1,87 @@
-*{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body{
-            background-color: #D2D2D2;
-            background-image:
-            repeating-linear-gradient(
-                to right, transparent 0 100px,
-                #25283b22 100px 101px
-            ),
-            repeating-linear-gradient(
-                to bottom, transparent 0 100px,
-                #25283b22 100px 101px
-            );
-        }
-        
-        body::before{
-            position: absolute;
-            width: min(1400px, 90vw);
-            top: 10%;
-            left: 50%;
-            height: 90%;
-            transform: translateX(-50%);
-            content: '';
-            background-image: url(images/bg.png);
-            background-size: 100%;
-            background-repeat: no-repeat;
-            background-position: top center;
-            pointer-events: none;
-        }
-
-.banner{
-    width: 100%;
-    height: 100vh;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.banner .slider{
-   position: absolute;
-   width: 200px;
-    height: 250px;
-    top: 10%;
-    left: calc(50% - 100px);
-    transform-style: preserve-3d;
-    transform: perspective(1000px);
-    animation: autoRun 20s linear infinite;
+/* Background grid */
+body {
+  background-color: #d2d2d2;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      transparent 0 100px,
+      #25283b22 100px 101px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 100px,
+      #25283b22 100px 101px
+    );
 }
-@keyframes autoRun{
-    from{ transform: perspective(1000px) rotateY(0deg);}
-    to{ transform: perspective(1000px) rotateY(-360deg);}}
 
-.banner .slider .item{
-    position: absolute;
-    inset: 0 0 0 0 ;
-    transform: 
-        rotateY(calc( (var(--position) -1 ) * (360 / var(--quantity)) * 1deg))
-        translate(550px);
-}   
+/* Decorative background image */
+body::before {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  height: 90%;
+  width: min(1400px, 90vw);
+  transform: translateX(-50%);
+  content: '';
+  background-image: url(images/bg.png);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  pointer-events: none;
+}
 
-.banner .slider .item img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}   
+.banner {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  text-align: center;
+  perspective: 1000px;
+}
+
+.banner .slider {
+  position: absolute;
+  inset: 0;             /* center positioning box */
+  margin: auto;         /* center horizontally and vertically */
+  /* Card size */
+  --card-w: 140px;
+  --card-h: 210px;
+  width: var(--card-w);
+  height: var(--card-h);
+  transform-style: preserve-3d;
+
+  /* Controls for look */
+  --radius: 520px;      /* distance from center; increase to reduce overlap */
+  --tilt: 0deg;       /* ring tilt (negative leans back) */
+  --offsetY: 0px;       /* vertical offset of the whole ring */
+
+  animation: autoRun 33s linear infinite;
+}
+
+@keyframes autoRun {
+  from { transform: translateY(var(--offsetY)) rotateX(var(--tilt)) rotateY(0deg); }
+  to   { transform: translateY(var(--offsetY)) rotateX(var(--tilt)) rotateY(-360deg); }
+}
+
+.banner .slider .item {
+  position: absolute;
+  inset: 0;
+  transform:
+    rotateY(calc((var(--position) - 1) * (360deg / var(--quantity))))
+    translateZ(var(--radius));
+  backface-visibility: hidden;
+}
+
+.banner .slider .item img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
