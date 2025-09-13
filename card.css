@@ -30,7 +30,7 @@ body::before {
   width: min(1400px, 90vw);
   transform: translateX(-50%);
   content: '';
-  background-image: url(images/bg.png);
+  background-image: url(images/bg0.png);
   background-position: top center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -59,7 +59,7 @@ body::before {
 
   /* Controls for look */
   --radius: 520px;      /* distance from center; increase to reduce overlap */
-  --tilt: 0deg;       /* ring tilt (negative leans back) */
+  --tilt: -10deg;       /* ring tilt (negative leans back) */
   --offsetY: 0px;       /* vertical offset of the whole ring */
 
   animation: autoRun 33s linear infinite;
@@ -76,7 +76,7 @@ body::before {
   transform:
     rotateY(calc((var(--position) - 1) * (360deg / var(--quantity))))
     translateZ(var(--radius));
-  backface-visibility: hidden;
+  backface-visibility: visible;
 }
 
 .banner .slider .item img {
